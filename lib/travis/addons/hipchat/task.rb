@@ -27,7 +27,7 @@ module Travis
 
           def process
             targets.each do |target|
-              helper = HttpHelper.new(target)
+              helper = HttpHelper.new(target, server)
               if helper.url.nil?
                 error "Empty HipChat URL for #{repository[:slug]}##{build[:id]}, decryption probably failed."
                 next
@@ -71,6 +71,10 @@ module Travis
 
           def config
             build[:config][:notifications][:hipchat] rescue {}
+          end
+
+          def server
+            config[:server] rescue nil
           end
       end
     end
