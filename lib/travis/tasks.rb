@@ -2,8 +2,7 @@ $:.unshift(File.expand_path('..', File.dirname(__FILE__)))
 
 require 'bundler/setup'
 require 'gh'
-require 'roadie'
-require 'roadie/action_mailer_extensions'
+require 'roadie-rails'
 require 'ostruct'
 require 'metriks/librato_metrics_reporter'
 require 'travis/tasks/error_handler'
@@ -62,7 +61,7 @@ module Roadie
 end
 
 ActiveSupport.on_load(:action_mailer) do
-  include Roadie::ActionMailerExtensions
+  include Roadie::Rails::Automatic
 end
 
 if Travis.config.sentry
