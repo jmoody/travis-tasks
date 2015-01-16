@@ -1,4 +1,5 @@
 require 'action_mailer'
+require 'roadie-rails'
 
 module Travis
   module Addons
@@ -7,6 +8,8 @@ module Travis
         class Build < ActionMailer::Base
 
           helper Mailer::Helpers
+
+          include ::Roadie::Rails::Mailer
 
           attr_reader :build, :commit, :repository, :jobs, :result_message
 
@@ -25,11 +28,15 @@ module Travis
             headers['Travis-CI-Repository'] = repository.slug
             headers['Travis-CI-Result'] = result_message.short.downcase
 
-            mail(from: from, to: recipients, subject: subject, template_path: 'build')
+            roadie_mail from: from, to: recipients, subject: subject, template_path: 'build'
           end
 
           def url_options
             nil
+          end
+
+          def roadie_options
+            ::Roadie::Rails::Options.new
           end
 
           private

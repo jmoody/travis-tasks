@@ -2,7 +2,6 @@ $:.unshift(File.expand_path('..', File.dirname(__FILE__)))
 
 require 'bundler/setup'
 require 'gh'
-require 'roadie-rails'
 require 'ostruct'
 require 'metriks/librato_metrics_reporter'
 require 'travis/tasks/error_handler'
@@ -58,10 +57,6 @@ module Roadie
     @_config ||= OpenStruct.new(roadie: OpenStruct.new(enabled: true, provider: nil, after_inlining: nil))
     @_application ||= OpenStruct.new(config: @_config, root: Pathname.new(Dir.pwd))
   end
-end
-
-ActiveSupport.on_load(:action_mailer) do
-  include Roadie::Rails::Automatic
 end
 
 if Travis.config.sentry
