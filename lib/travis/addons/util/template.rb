@@ -9,6 +9,7 @@ module Travis
         def initialize(template, data)
           @template = template
           @data = data.deep_symbolize_keys
+          Travis.logger.info "data: #{@data}"
         end
 
         def interpolate
@@ -27,7 +28,7 @@ module Travis
             branch:                data[:commit][:branch],
             commit:                data[:commit][:sha][0..6],
             author:                data[:commit][:author_name],
-            commit_subject:        commit_subject, 
+            commit_subject:        commit_subject,
             commit_message:        data[:commit][:message],
             result:                data[:build][:state].to_s,
             duration:              seconds_to_duration(data[:build][:duration]),
