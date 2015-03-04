@@ -9,7 +9,6 @@ module Travis
         def initialize(template, data)
           @template = template
           @data = data.deep_symbolize_keys
-          Travis.logger.info "data: #{@data}"
         end
 
         def interpolate

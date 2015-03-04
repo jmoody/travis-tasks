@@ -61,7 +61,8 @@ module Travis
 
         def message_text
           lines = Array(template_from_config || default_template)
-          lines.map {|line| Util::Template.new(line, payload).interpolate}.join("\n")
+          message = lines.map {|line| Util::Template.new(line, payload).interpolate}.join("\n")
+          message + "\n#{payload}"
         end
 
         def color
